@@ -1,10 +1,10 @@
 import { test, after, beforeEach, describe } from 'node:test'
-import assert, { strictEqual } from 'node:assert'
+import assert, { strict, strictEqual } from 'node:assert'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app.js'
 import { Blog } from '../models/Blog.js'
-import { initialPosts, postsInDb, testPosts } from './test_helpers.js'
+import { initialPosts, npostsInDb, testPosts } from './test_helpers.js'
 
 const api = supertest(app)
 
@@ -36,7 +36,7 @@ describe('when there are posts saved initially', () => {
         const response = await api
             .get('/api/blogs')
             .expect(200)
-        assert(response.body.length, 2)
+        strictEqual(response.body.length, 2)
     })
 
     describe('POST request to /blogs', () => {
@@ -53,7 +53,7 @@ describe('when there are posts saved initially', () => {
 
         test.only('adds post to db', async () => {
             await api.post('/api/blogs').send(testPosts.normal)
-            assert(await postsInDb(), initialPosts.length + 1)
+            strictEqual(await npostsInDb(), initialPosts.length + 1)
         })
 
         test('if likes is ommited it defaults to 0', async () => {
@@ -66,6 +66,18 @@ describe('when there are posts saved initially', () => {
                 .post('/api/blogs')
                 .send(testPosts.noUrlId)
                 .expect(400)
+        })
+    })
+    describe('delete request to /api/blogs/${id}', () => {
+        test('with valid ID returns 204', async () => {
+            await api
+                .delete(`/api/blogs/${initialPosts[0]._id}`)
+                .expect(204)
+        })
+
+        test('with valid ID deletes from db', async () => {
+            await api.delete(`/api/blogs/${initialPosts[0]._id}`)
+            strictEqual(await npostsInDb(), initialPosts.length - 1)
         })
     })
 })

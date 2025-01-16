@@ -48,5 +48,11 @@ export const nonExistingId = async () => {
 }
 
 export const postsInDb = async () => {
-    return await Blog.find({})
+    const posts = await Blog.find({})
+    return posts.map(post => post.toJSON())
+}
+
+export const npostsInDb = async () => {
+    const posts = await Blog.find({})
+    return posts.length
 }

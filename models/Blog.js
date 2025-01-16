@@ -12,5 +12,11 @@ const blogSchema = new Schema({
     }
 });
 
+blogSchema.set('toJSON', {
+    transform: (doc, ret) => {
+        ret._id = ret._id.toString(); // Add id as a string
+    },
+});
+
 export const Blog = model('Blog', blogSchema);
 
