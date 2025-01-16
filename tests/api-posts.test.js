@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app.js'
 import { Blog } from '../models/Blog.js'
-import { initialPosts, npostsInDb, testPosts } from './test_helpers.js'
+import { initialPosts, nonExistingId, npostsInDb, testPosts } from './test_helpers.js'
 
 const api = supertest(app)
 
@@ -79,5 +79,10 @@ describe('when there are posts saved initially', () => {
             await api.delete(`/api/blogs/${initialPosts[0]._id}`)
             strictEqual(await npostsInDb(), initialPosts.length - 1)
         })
+    })
+    test('with invalid ID returns 404', async () => {
+        await api
+        .delete(`/api/blog/${nonExistingId}`)
+        .expect(400)
     })
 })
