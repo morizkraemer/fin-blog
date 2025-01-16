@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 
 import assert from 'node:assert'
-import { dummy, totalLikes  } from '../utils/list-helpers.js'
+import { dummy, totalLikes } from '../utils/list-helpers.js'
 
 const blogs = [
     {
@@ -54,6 +54,9 @@ const blogs = [
     }
 ]
 
+console.log();
+console.log('-- list helpers test --');
+console.log();
 
 test('dummy returns one', () => {
     const blogs = []
