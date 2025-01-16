@@ -17,17 +17,15 @@ switch (mode) {
         if (!user || !pw) {
             throw new Error('pw or user missing, check env variables')
         }
-
-        mongoUrl = `mongodb+srv://${user}:${pw}@blogdb.0228l.mongodb.net/productionDB?retryWrites=true&w=majority&appName=blogdb`
+        mongoUrl = 
+            `mongodb+srv://${user}:${pw}@blogdb.0228l.mongodb.net/productionDB?retryWrites=true&w=majority&appName=blogdb`
         break
 }
 
 if (mongoUrl) {
-    connect(mongoUrl)
-        .then(() => {
-            logging.info(`${connection.name} connected`)
-        })
-        .catch((err) => { logging.error(err) })
+    await connect(mongoUrl)
+    try { logging.info(`${connection.name} connected`) }
+    catch (err) { logging.error(err) }
 }
 
 export default mongoose
