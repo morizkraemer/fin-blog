@@ -13,8 +13,9 @@ const blogSchema = new Schema({
 });
 
 blogSchema.set('toJSON', {
-    transform: (doc, ret) => {
-        ret._id = ret._id.toString(); // Add id as a string
+    transform: (document, returnedObject) => {
+        returnedObject._id = returnedObject._id.toString(); // Add id as a string
+        delete returnedObject.__v
     },
 });
 
