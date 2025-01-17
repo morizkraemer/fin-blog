@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app.js'
 import { BlogPost } from '../models/blog-post.js'
-import { initialPosts, nonExistingId, npostsInDb, postsInDb, testPosts } from './test_helpers.js'
+import { initialPosts, nonExistingId, npostsInDb, postsInDb, testPosts } from './posts-test-helpers.js'
 
 const api = supertest(app)
 
@@ -14,7 +14,7 @@ after(async () => {
 });
 
 
-console.log('-- api route tests --');
+console.log('-- api posts tests --');
 console.log();
 
 describe('when there are posts saved initially', () => {

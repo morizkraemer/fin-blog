@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 const usersRouter = Router()
 
-usersRouter.post('/user', async (req, res) => {
+usersRouter.post('/users', async (req, res) => {
     const { username, name, password } = req.body
 
     const passwordHash = await bcrypt.hash(password, 10)
