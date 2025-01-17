@@ -1,9 +1,9 @@
 import express from "express"
 
-const TestRouter = express.Router()
+const testRouter = express.Router()
 
-TestRouter.get('/', (req, res) => {
+testRouter.get('/', (req, res) => {
     res.send('test success')
 })
 
-export { TestRouter }
+export { testRouter }

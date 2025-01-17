@@ -1,14 +1,14 @@
 import { BlogPost } from '../models/blog-post.js'
 import express from "express"
 
-const PostsRouter = express.Router()
+const postsRouter = express.Router()
 
-PostsRouter.get('/blogs', async (req, res) => {
+postsRouter.get('/blogs', async (req, res) => {
     const blogs = await BlogPost.find({})
     res.json(blogs)
 })
 
-PostsRouter.post('/blogs', async (req, res, next) => {
+postsRouter.post('/blogs', async (req, res, next) => {
     const newBlogEntry = new BlogPost(req.body)
     try {
         const blogEntry = await newBlogEntry.save()
@@ -18,7 +18,7 @@ PostsRouter.post('/blogs', async (req, res, next) => {
     }
 })
 
-PostsRouter.delete('/blogs/:id', async (req, res, next) => {
+postsRouter.delete('/blogs/:id', async (req, res, next) => {
         try {
         await BlogPost.deleteOne({_id: req.params.id})
         res.status(204).send('deleted')
@@ -28,7 +28,7 @@ PostsRouter.delete('/blogs/:id', async (req, res, next) => {
 
 })
 
-PostsRouter.put('/blogs/:id', async (req, res, next) => {
+postsRouter.put('/blogs/:id', async (req, res, next) => {
     try {
         const response = await BlogPost.findOneAndUpdate(
             {_id: req.params.id}, 
@@ -41,4 +41,4 @@ PostsRouter.put('/blogs/:id', async (req, res, next) => {
     }
 })
 
-export { PostsRouter }
+export { postsRouter }
