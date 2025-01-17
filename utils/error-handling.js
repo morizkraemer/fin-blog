@@ -1,7 +1,7 @@
 import logging from "./logging.js"
 
 export const unknownEndpoint = (req, res) => {
-    return response.status(404).send({ error: 'unknown endpoint' })
+    return res.status(404).send({ error: 'unknown endpoint' })
 }
 
 export const errorHandler = (err, req, res, next) => {
