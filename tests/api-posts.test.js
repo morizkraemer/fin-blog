@@ -64,7 +64,7 @@ describe('when there are posts saved initially', () => {
         test('if title or url missing it returns 400', async () => {
             await api
                 .post('/api/blogs')
-                .send(testPosts.noUrlId)
+                .send(testPosts.noUrlTitle)
                 .expect(400)
         })
     })
@@ -78,7 +78,7 @@ describe('when there are posts saved initially', () => {
 
         test('with invalid ID returns 404', async () => {
             await api
-                .delete(`/api/blog/${nonExistingId}`)
+                .delete(`/api/blogs/${await nonExistingId()}`)
                 .expect(400)
         })
     })
@@ -95,7 +95,7 @@ describe('when there are posts saved initially', () => {
 
     test('with invalid id returns 400', async () => {
              await api
-                .put(`/api/blogs/${nonExistingId()}`)
+                .put(`/api/blogs/${await nonExistingId()}`)
                 .send(testPosts.postUpdate)
                 .expect(400)
     })

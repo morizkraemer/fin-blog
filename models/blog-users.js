@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, SchemaTypes, model } from "mongoose";
 
 const userSchema = new Schema({
     username: {
@@ -12,7 +12,7 @@ const userSchema = new Schema({
     },
     posts: [
     {
-        type: Schema.Types.ObjectId,
+        type: SchemaTypes.ObjectId,
             ref: 'BlogPost'
     }
     ] 

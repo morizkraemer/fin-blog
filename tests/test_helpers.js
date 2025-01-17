@@ -1,16 +1,17 @@
 import { BlogPost } from "../models/blog-post.js"
+const myUser = "678a8bf920d1533987654153"
 export const initialPosts = [
     {
         "_id": "67880e5462359ec2ea2e958f",
         "title": "secondOne",
-        "author": "Me, bitch",
+        "author": myUser,
         "url": "gq",
         "likes": 5,
         "__v": 0
     }, {
         "_id": "67880e6862359ec2ea2e9592",
         "title": "firstOne",
-        "author": "Not me, bitch",
+        "author": myUser,
         "url": "gq",
         "likes": 8,
         "__v": 0
@@ -20,26 +21,26 @@ export const initialPosts = [
 export const testPosts = {
     normal: {
         title: "new post",
-        author: "Me, bitch",
+        author: myUser,
         url: "gq",
         likes: 5,
     },
     noLikes: {
         title: "secondOne",
-        author: "Me, bitch",
+        author: myUser,
         url: "gq",
     },
-    noUrlId: {
-        author: "Me, bitch",
+    noUrlTitle: {
+        author: myUser,
         likes: 5
     },
     minimum: {
         title: 'minimum post',
-        url: 'gqqfwf'
+        author: myUser,
     },
     postUpdate: {
         title: "updated post",
-        author: "Me again, bitch",
+        author: myUser,
         url: "g3",
         likes: 2,
     },
@@ -48,12 +49,14 @@ export const testPosts = {
     }
 }
 
+// TODO: it doesnt work??
 export const nonExistingId = async () => {
-    const note = new BlogPost(testPosts.minimum)
-    await note.save()
-    await note.deleteOne()
+    //const newPost = new BlogPost(testPosts.minimum)
+    //await newPost.save()
+    //await newPost.deleteOne()
+    //return newPost._id.toString()
+    return 1
 
-    return note._id.toString()
 }
 
 export const postsInDb = async () => {

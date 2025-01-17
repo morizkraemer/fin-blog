@@ -1,10 +1,12 @@
-import { Schema, model } from "mongoose";
+import { Schema, SchemaTypes, model } from "mongoose";
 const blogSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    author: String,
+    author: {
+        type: SchemaTypes.ObjectId
+    },
     url: String,
     likes: {
         type: Number,
@@ -14,8 +16,7 @@ const blogSchema = new Schema({
 
 blogSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-        returnedObject._id = returnedObject._id.toString(); // Add id as a string
-        delete returnedObject.__v
+        returnedObject._id = returnedObject._id.toString();
     },
 });
 

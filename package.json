@@ -10,11 +10,12 @@
         "test": "tests"
     },
     "scripts": {
-        "dev": "export $(cat .env | xargs)  nodemon index.js",
+        "dev": "export $(cat .env | xargs) && nodemon index.js",
         "test": "export $(cat .env | xargs) && MODE=test node --test",
         "test:one": "export $(cat .env | xargs) && MODE=test node --test --test-only"
     },
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "express": "^4.21.2",
         "mongodb-memory-server": "^10.1.3",
