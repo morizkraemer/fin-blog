@@ -1,4 +1,4 @@
-import { Blog } from "../models/Blog.js"
+import { BlogPost } from "../models/blog-post.js"
 export const initialPosts = [
     {
         "_id": "67880e5462359ec2ea2e958f",
@@ -36,23 +36,32 @@ export const testPosts = {
     minimum: {
         title: 'minimum post',
         url: 'gqqfwf'
+    },
+    postUpdate: {
+        title: "updated post",
+        author: "Me again, bitch",
+        url: "g3",
+        likes: 2,
+    },
+    likesUpdate: {
+        likes: 25
     }
 }
 
 export const nonExistingId = async () => {
-  const note = new Blog(testPosts.minimum)
-  await note.save()
-  await note.deleteOne()
+    const note = new BlogPost(testPosts.minimum)
+    await note.save()
+    await note.deleteOne()
 
-  return note._id.toString()
+    return note._id.toString()
 }
 
 export const postsInDb = async () => {
-    const posts = await Blog.find({})
+    const posts = await BlogPost.find({})
     return posts.map(post => post.toJSON())
 }
 
 export const npostsInDb = async () => {
-    const posts = await Blog.find({})
+    const posts = await BlogPost.find({})
     return posts.length
 }

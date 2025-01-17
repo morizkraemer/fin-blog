@@ -1,10 +1,10 @@
 import { test, after, beforeEach, describe } from 'node:test'
-import assert, { strict, strictEqual } from 'node:assert'
+import assert, { strictEqual } from 'node:assert'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app.js'
-import { Blog } from '../models/Blog.js'
-import { initialPosts, nonExistingId, npostsInDb, testPosts } from './test_helpers.js'
+import { BlogPost } from '../models/blog-post.js'
+import { initialPosts, nonExistingId, npostsInDb, postsInDb, testPosts } from './test_helpers.js'
 
 const api = supertest(app)
 
@@ -21,8 +21,8 @@ describe('when there are posts saved initially', () => {
 
     beforeEach(async () => {
         await mongoose.connection.dropDatabase()
-        await Blog.create(initialPosts[0])
-        await Blog.create(initialPosts[1])
+        await BlogPost.create(initialPosts[0])
+        await BlogPost.create(initialPosts[1])
     })
 
     test('blogposts are returned as json', async () => {
@@ -69,20 +69,34 @@ describe('when there are posts saved initially', () => {
         })
     })
     describe('delete request to /api/blogs/${id}', () => {
-        test('with valid ID returns 204', async () => {
+        test('with valid ID returns 204 and deletes from DB', async () => {
             await api
                 .delete(`/api/blogs/${initialPosts[0]._id}`)
                 .expect(204)
-        })
-
-        test('with valid ID deletes from db', async () => {
-            await api.delete(`/api/blogs/${initialPosts[0]._id}`)
             strictEqual(await npostsInDb(), initialPosts.length - 1)
         })
+
+        test('with invalid ID returns 404', async () => {
+            await api
+                .delete(`/api/blog/${nonExistingId}`)
+                .expect(400)
+        })
     })
-    test('with invalid ID returns 404', async () => {
-        await api
-        .delete(`/api/blog/${nonExistingId}`)
-        .expect(400)
+    describe('put request to /api/blogs/${id}', async () => {
+        test('with valid ID returns 200 returns updated post', async () => {
+            const response = await api
+                .put(`/api/blogs/${initialPosts[0]._id}`)
+                .send(testPosts.postUpdate)
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+            strictEqual(response.body.likes, testPosts.postUpdate.likes)
+        })
+    })
+
+    test('with invalid id returns 400', async () => {
+             await api
+                .put(`/api/blogs/${nonExistingId()}`)
+                .send(testPosts.postUpdate)
+                .expect(400)
     })
 })
