@@ -12,16 +12,21 @@
     "scripts": {
         "dev": "export $(cat .env | xargs) && nodemon index.js",
         "test": "export $(cat .env | xargs) && MODE=test node --test",
+        "test:posts": "export $(cat .env | xargs) && MODE=test node --test tests/api-posts.test.js",
+        "test:users": "export $(cat .env | xargs) && MODE=test node --test tests/api-users.test.js",
         "test:one": "export $(cat .env | xargs) && MODE=test node --test --test-only"
     },
     "dependencies": {
         "bcrypt": "^5.1.1",
-        "cors": "^2.8.5",
         "express": "^4.21.2",
-        "mongodb-memory-server": "^10.1.3",
         "mongoose": "^8.9.5",
         "morgan": "^1.10.0",
+        "cors": "^2.8.5"
+
+    },
+    "devDependencies": {
         "nodemon": "^3.1.9",
+        "mongodb-memory-server": "^10.1.3",
         "supertest": "^7.0.0"
     }
 }

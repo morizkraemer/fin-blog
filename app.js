@@ -5,11 +5,13 @@ import { postsRouter } from './controllers/posts.js'
 import { testRouter } from './controllers/test-routes.js'
 import { usersRouter } from './controllers/users.js'
 import mongoose from './utils/mongo-con.js'
+import morgan from 'morgan'
 
 const app = express()
 
 app.use(cors())
 app.use(json())
+app.use(morgan('tiny'))
 
 app.use('/api', postsRouter)
 app.use('/api', usersRouter)
