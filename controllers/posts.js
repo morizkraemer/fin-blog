@@ -19,9 +19,9 @@ postsRouter.post('/blogs', async (req, res, next) => {
 })
 
 postsRouter.delete('/blogs/:id', async (req, res, next) => {
-        try {
-        await BlogPost.deleteOne({_id: req.params.id})
-        res.status(204).send('deleted')
+    try {
+        await BlogPost.deleteOne({ _id: req.params.id })
+        return res.status(204).send('deleted')
     } catch (err) {
         next(err)
     }
@@ -31,9 +31,9 @@ postsRouter.delete('/blogs/:id', async (req, res, next) => {
 postsRouter.put('/blogs/:id', async (req, res, next) => {
     try {
         const response = await BlogPost.findOneAndUpdate(
-            {_id: req.params.id}, 
+            { _id: req.params.id },
             req.body,
-            {new: true}
+            { new: true }
         )
         res.status(200).json(response)
     } catch (err){
