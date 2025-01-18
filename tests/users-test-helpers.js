@@ -13,6 +13,19 @@ export const initialUsers = [
     }
 ]
 
+export const testUsers = {
+    freshUsername: {
+        username: 'newUser2',
+        name: 'new user',
+        password: 'supersecret',
+    },
+    duplicateUsername: {
+        name: 'testUser1Again',
+        username: 'testUser1',
+        password: 'password'
+    }
+}
+
 
 
 export const usersInDb = async () => {

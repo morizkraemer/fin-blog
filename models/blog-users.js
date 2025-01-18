@@ -4,6 +4,7 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
+        unique: true
     },
     name: String,
     passwordHash: {
@@ -11,11 +12,12 @@ const userSchema = new Schema({
         required: true
     },
     posts: [
-    {
-        type: SchemaTypes.ObjectId,
+        {
+            type: SchemaTypes.ObjectId,
             ref: 'BlogPost'
-    }
-    ] 
+        }
+    ]
+
 
 })
 
@@ -26,5 +28,6 @@ userSchema.set('toJSON', {
         delete returnedObject.passwordHash
     }
 })
+
 
 export const User = model('User', userSchema)

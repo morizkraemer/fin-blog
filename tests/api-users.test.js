@@ -5,7 +5,7 @@ import supertest from 'supertest'
 import app from '../app.js'
 import { User } from '../models/blog-users.js'
 import bcrypt from 'bcrypt'
-import { initialUsers, usersInDb } from './users-test-helpers.js'
+import { initialUsers, testUsers, usersInDb } from './users-test-helpers.js'
 
 const api = supertest(app)
 
@@ -19,6 +19,7 @@ console.log();
 describe('when there is one user saved initially', async () => {
     beforeEach(async () => {
         await mongoose.connection.dropDatabase();
+        await User.createIndexes()
 
         const userObjects = await Promise.all(initialUsers.map(async ({ name, username, password }) => {
             const passwordHash = await bcrypt.hash(password, 10);
@@ -36,13 +37,15 @@ describe('when there is one user saved initially', async () => {
     test('user gets created with fresh username', async () => {
         await api
             .post('/api/users/')
-            .send({
-                username: 'newUser2',
-                name: 'new user',
-                password: 'supersecret',
-            })
+            .send(testUsers.freshUsername)
             .expect(201)
         const nUsers = await usersInDb()
         assert.ok(nUsers.length - initialUsers.length === 1)
+    })
+    test('400 error with duplicate username', async () => {
+        await api
+            .post('/api/users')
+            .send(testUsers.duplicateUsername)
+            .expect(400)
     })
 })
