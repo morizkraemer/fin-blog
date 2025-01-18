@@ -6,6 +6,7 @@ import { testRouter } from './controllers/test-routes.js'
 import { usersRouter } from './controllers/users.js'
 import mongoose from './utils/mongo-con.js'
 import morgan from 'morgan'
+import { loginRouter } from './controllers/login.js'
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(morgan('tiny'))
 
 app.use('/api', postsRouter)
 app.use('/api', usersRouter)
+app.use('/api', loginRouter)
 app.use('/test', testRouter)
 
 app.use(unknownEndpoint)
