@@ -4,7 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 export const createTestDB = async () => {
     const mongod = await MongoMemoryServer.create({
         instance: {
-            dbPath: '/home/morizk/CODE/FINNLAD/part4/blog-backend/memdb'
+            dbPath: '/home/morizk/CODE/COURSE/FINNLAD/blog/memdb/'
         }
     })
 
