@@ -8,6 +8,7 @@ usersRouter.post('/users', async (req, res, next) => {
     try {
         const { username, name, password } = req.body
 
+        if (!username || !password) res.status(404).send({error: "username or password missing"})
         const passwordHash = await bcrypt.hash(password, 10)
 
         const newUser = new User({ username, name, passwordHash })
@@ -16,6 +17,11 @@ usersRouter.post('/users', async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+})
+
+usersRouter.get('/users', async (req, res) => {
+    const allUsers = await User.find({}).populate('posts')
+    res.send(allUsers)
 })
 
 export { usersRouter }
